@@ -35,8 +35,11 @@
         margin-bottom: 0px;
       }
       &-front-wrapper{
+        @media screen and (max-width: 400px) {
+          width: 365px;
+        }
         overflow: hidden;
-        width: 300px;
+        width: 420px;
         height: 425px;
         position: relative;
         display: flex;
@@ -64,7 +67,7 @@
         }
         &-content{
           padding: 15px;
-          width: 300px;
+          width: 420px;
           height: 425px;
           position: relative;
           display: block;

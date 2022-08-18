@@ -12,6 +12,6 @@ export const WIDGET_PREFIX = 'gcw';
 // export const GIFT_CARD_PRODUCT_ID = 39576332927038
 // export const BACKEND_API = 'https://greeting-cards-freshcut.onthemap.com/api';
 // Test store variables 
-export const GIFT_CARD_PRODUCT_ID = 41788556476587;
-  // export const GIFT_CARD_PRODUCT_ID = 39576332927038;
-  export const BACKEND_API = 'https://6c6d-2409-4055-50e-228e-1c81-bae4-56fa-6d12.ngrok.io/api';
+export const GIFT_CARD_PRODUCT_ID = XXXXXXXXXXXXXXXXXXXXXXX;
+  // export const GIFT_CARD_PRODUCT_ID = XXXXXXXXXXXXX;
+  export const BACKEND_API = 'https://49ad-124-253-61-161.ngrok.io/api';

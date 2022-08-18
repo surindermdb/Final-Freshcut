@@ -204,8 +204,18 @@ export default class Popup extends Element {
       )).join('');
 
       console.log('emoji','====',emoji);
-      
-      textarea.value +=  selection.emoji; 
+
+      var startPosition = textarea.selectionStart;
+
+      let textBeforeCursorPosition = textarea.value.substring(0, startPosition);
+      let textAfterCursorPosition = textarea.value.substring(startPosition, textarea.value.length);
+
+      console.log('start Position','============',textBeforeCursorPosition)
+      console.log('end Position','============',textAfterCursorPosition)
+
+      textarea.value = textBeforeCursorPosition + selection.emoji + textAfterCursorPosition;
+
+      // textarea.value +=  selection.emoji; 
     });
 
     picker.on('hidden', () => {
@@ -753,9 +763,15 @@ export default class Popup extends Element {
         let lineIndex = element.getAttribute("data-count");
         let variantId = element.getAttribute("data-variantId");
         let datakey = element.getAttribute("data-key");
+        
         let parentdatakey= '0';
         let textQty= '0';
-        console.log(element.parentElement.previousElementSibling.children.length>0)
+        
+        console.log('parent main element','=====',element.parentElement.previousElementSibling)
+        let mainElement= element.parentElement.previousElementSibling;
+        let product_id=mainElement.getAttribute("data-productid");
+
+        console.log('Edit Button product id','===========',product_id)
         if(element.parentElement.previousElementSibling.children.length>0){
           let parentElement = element.parentElement.previousElementSibling;
           variantId = parentElement.getAttribute("data-variantId");
@@ -796,7 +812,7 @@ export default class Popup extends Element {
         this.setDataset(this.editpersButton, "key", datakey);
         this.theme.lineIndex = itemLineItemIndex;
         
-        this.setClickEvent(this.editpersButton, this.show.bind(this, parseInt(lineIndex), parseInt(variantId), parseInt(textQty) , datakey , parentdatakey))
+        this.setClickEvent(this.editpersButton, this.show.bind(this, parseInt(lineIndex), parseInt(variantId), parseInt(textQty), datakey , parentdatakey,'', parseInt(product_id)))
         if(showButton){
             cartItem.appendChild(this.editliItem);
         }
@@ -837,8 +853,10 @@ export default class Popup extends Element {
    * Open widget event
    */
    async show(id, variantId = false, textQty, datakey, parentdatakey,url,product_id, loopIndex = 0, lineItemId = false) {
-    // console.log('=======',id,variantId,textQty,datakey,parentdatakey,url,product_id)
+    console.log('=======',id,variantId,textQty,datakey,parentdatakey,url,product_id)
     console.log('account ',id,variantId,loopIndex,lineItemId);
+
+    console.log('click to open popup')
     productObj={id: id, variantId: variantId, textQty: textQty, datakey: datakey, parentdatakey: parentdatakey,loopIndex : loopIndex, lineItemId : lineItemId,url:url, productId:product_id};
     if(textQty>1){
       removeClass(this.warningPopup, [CLASS_NAMES.DISPLAY_NONE]);
@@ -876,7 +894,7 @@ export default class Popup extends Element {
     this.theme.selectedParentKey = productObj.parentdatakey;
 
     removeClass(this.popup, [CLASS_NAMES.DISPLAY_NONE]);
-    addClass(this.popup, [CLASS_NAMES.DISPLAY_BLOCK])
+    addClass(this.popup, [CLASS_NAMES.DISPLAY_BLOCK]);
 
     if(this.attributes.isAccountPage){
       this.attributes.lineItemId = productObj.lineItemId;
@@ -1211,6 +1229,10 @@ export default class Popup extends Element {
     }
     
     Swiper.use([Navigation]);
+
+    console.log('shopifyId','=========',shopifyId);
+
+    console.log('this cards','============',this.cards);
     
     if(shopifyId != null){
 

@@ -2,6 +2,7 @@ import Shopify from "@shopify/shopify-api";
 const { html_to_pdf } = require("../../../puppeteer");
 const imageToBase64 = require('image-to-base64');
 import RouteController from "../RouteController";
+import WebhooksController from "./WebhooksController";
 
 // Models
 import Order from "../../../Models/Orders";
@@ -327,6 +328,8 @@ class OrderController extends RouteController {
         );
         // Create array to pass to mustache for rendering cards;
         let ordersData = [];
+
+        
   
         for (let i = 0; i < orderModel.length; i++) {
           let orderId = orderModel[i].orderId.split("-")[0];
@@ -342,6 +345,7 @@ class OrderController extends RouteController {
   
           // console.log('lineItems','=========',lineItems);
   
+          // console.log('selected order','==========',orderModel[i]._id);
           // console.log('lineItems qty','=========',lineItems[0].quantity);
   
           // Take order message and split it in mupltile lines after each "\n" character
@@ -354,7 +358,7 @@ class OrderController extends RouteController {
           });
   
           for(let j = 0;j < lineItems[0].quantity; j++){
-            
+
             let base64image = await imageToBase64(orderModel[i].designId) // Path to the image
             .then(
                 (response) => {
@@ -385,13 +389,95 @@ class OrderController extends RouteController {
             // console.log(orderObj);
   
             ordersData.push(orderObj);
+
+          }
+
+          if(isPdficon !== 'true'){
+
+            console.log('order id',orderId);
+            var myHeaders = new Headers();
+            myHeaders.append("X-Shopify-Access-Token", "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");
+            // myHeaders.append("Cookie", "_secure_admin_session_id=cd373ae50ebb1384cd48b96231134f89; _secure_admin_session_id_csrf=cd373ae50ebb1384cd48b96231134f89");
+
+            var requestOptions = {
+              method: 'GET',
+              headers: myHeaders,
+              redirect: 'follow'
+            };
+
+            var shopifyLocationRequestUrl = "https://fresh-greeting-card.myshopify.com/admin/api/2022-07/locations.json";
+            var locationData = await fetch(shopifyLocationRequestUrl, requestOptions)
+              .then(response => 
+                response.json()
+              )
+              .then((result) =>  { 
+              
+                return result;
+              })
+              .catch(error => console.log('error', error));
+
+
+            var shopifyOrderRequestUrl = "https://fresh-greeting-card.myshopify.com/admin/api/2022-04/orders/"+orderId+".json";
+            
+            var OrderData = await fetch(shopifyOrderRequestUrl, requestOptions)
+              .then(response => 
+                response.json()
+              )
+              .then((result) =>  { 
+              
+                return result;
+              })
+              .catch(error => console.log('error', error));
+
+              let filterLocation = locationData.locations.filter((item)=>{
+                return item.zip == OrderData.order.line_items[0].origin_location.zip
+              });
+
+              let itemsIDs=[];
+              for(let j = 0; j < OrderData.order.line_items.length;j++){
+                itemsIDs.push({"id": OrderData.order.line_items[j].id});
+              }
+
+              console.log('itemsIDs','==',itemsIDs);
+
+              myHeaders.append("Content-Type", "application/json");
+
+              var requestPostOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                redirect: 'follow',
+                body : JSON.stringify({
+                  "fulfillment": {
+                   "location_id": filterLocation[0].id,
+                    "line_items": itemsIDs,
+                    "notify_customer": false
+                  }
+                }) 
+              };
+
+              console.log('request Post Options','==',requestPostOptions);
+
+              var shopifyFullfillmentRequestUrl = "https://fresh-greeting-card.myshopify.com/admin/api/2022-04/orders/"+orderId+"/fulfillments.json";
+
+
+              var fullfillData = await fetch(shopifyFullfillmentRequestUrl, requestPostOptions)
+              .then(response => 
+                response.json()
+              )
+              .then((result) =>  { 
+              
+                return result;
+              })
+              .catch(error => console.log('error', error));
+
+              console.log('fullfill Data','======',fullfillData)
           }
   
         }
   
         // return;
   
-        console.log('ordersData','=========',ordersData);
+        // console.log('ordersData','=========',ordersData);
   
         // return;
   
