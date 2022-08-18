@@ -396,7 +396,7 @@ class OrderController extends RouteController {
 
             console.log('order id',orderId);
             var myHeaders = new Headers();
-            myHeaders.append("X-Shopify-Access-Token", "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");
+            myHeaders.append("X-Shopify-Access-Token", "XXXXXXXXXXX");
             // myHeaders.append("Cookie", "_secure_admin_session_id=cd373ae50ebb1384cd48b96231134f89; _secure_admin_session_id_csrf=cd373ae50ebb1384cd48b96231134f89");
 
             var requestOptions = {
