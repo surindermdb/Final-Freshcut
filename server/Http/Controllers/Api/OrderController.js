@@ -362,7 +362,7 @@ class OrderController extends RouteController {
             let base64image = await imageToBase64(orderModel[i].designId) // Path to the image
             .then(
                 (response) => {
-                    return response;// "cGF0aC90by9maWxlLmpwZw=="
+                    return response;// "XXX=="
                 }
             )
             .catch(
@@ -383,7 +383,7 @@ class OrderController extends RouteController {
               couponCode: settingsModel.couponCode,
               orderId: orderModel[i].orderName,
               discountText: orderModel[i].discountText,
-              // freshLogo:'http://dcf1-124-253-60-105.ngrok.io/public/pankaj.jpg'
+              // freshLogo:'http://XXXXX/public/XXXX.jpg'
             };
             // printIdUnix=orderModel[i].orderItemId;
             // console.log(orderObj);
@@ -405,7 +405,7 @@ class OrderController extends RouteController {
               redirect: 'follow'
             };
 
-            var shopifyLocationRequestUrl = "https://fresh-greeting-card.myshopify.com/admin/api/2022-07/locations.json";
+            var shopifyLocationRequestUrl = "https://XXXXXXXXXXXXXXXXXX/admin/XX/XXXXXXXXXXXX/XXXX.json";
             var locationData = await fetch(shopifyLocationRequestUrl, requestOptions)
               .then(response => 
                 response.json()
@@ -417,7 +417,7 @@ class OrderController extends RouteController {
               .catch(error => console.log('error', error));
 
 
-            var shopifyOrderRequestUrl = "https://fresh-greeting-card.myshopify.com/admin/api/2022-04/orders/"+orderId+".json";
+            var shopifyOrderRequestUrl = "https://XXXXXXXXXXXXXXXX/admin/XX/XXXXXXXXXXXXXX/XX/"+XXXXXXXXXXXXXXXX+".json";
             
             var OrderData = await fetch(shopifyOrderRequestUrl, requestOptions)
               .then(response => 
@@ -457,7 +457,7 @@ class OrderController extends RouteController {
 
               console.log('request Post Options','==',requestPostOptions);
 
-              var shopifyFullfillmentRequestUrl = "https://fresh-greeting-card.myshopify.com/admin/api/2022-04/orders/"+orderId+"/fulfillments.json";
+              var shopifyFullfillmentRequestUrl = "https://XXXXXXX/admin/XXX/XXXXX/orders/"+XXXX+"/XXXX.json";
 
 
               var fullfillData = await fetch(shopifyFullfillmentRequestUrl, requestPostOptions)
