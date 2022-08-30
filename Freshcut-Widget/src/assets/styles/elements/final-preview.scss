@@ -46,6 +46,7 @@
         margin: auto;
         border: 2px solid #000;
         align-items: center;
+        justify-content: center;
       }
       &-card-front{
         @media screen and (max-width: 900px) {
@@ -85,4 +86,8 @@
 
 .agree-container{
   justify-content: flex-end !important;
+}
+
+.gcw-front-image{
+  height: 100%;
 }

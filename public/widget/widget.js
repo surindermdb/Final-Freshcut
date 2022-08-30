@@ -1,10 +1,10 @@
 (function () {
-  const hostName = 'https://49ad-124-253-61-161.ngrok.io';
+  const hostName = 'https://XXXXXXXXXXXXXX';
   const app = {
     GiftCardWidget: null,
 
     // Host: "https://greeting-cards-freshcut.onthemap.com",
-    Host: "https://49ad-124-253-61-161.ngrok.io",
+    Host: "https://XXXXXXXXXXXXXX",
 
     Routes: {
       Settings: "/api/widget",
@@ -28,8 +28,8 @@
       //   "https://otm-cdn-private.s3.amazonaws.com/gift-card-generator.min.css",
       // Script:
       //   "https://otm-cdn-private.s3.amazonaws.com/giftcard-generator.min.js",
-      Style: "https://49ad-124-253-61-161.ngrok.io/public/gift-card-generator.min.css",
-      Script: "https://49ad-124-253-61-161.ngrok.io/public/giftcard-generator.min.js",
+      Style: "https://XXXXXXXXXXXXXX/public/gift-card-generator.min.css",
+      Script: "https://XXXXXXXXXXXXXX/public/giftcard-generator.min.js",
     },
 
     Name: "GiftCardWidget",

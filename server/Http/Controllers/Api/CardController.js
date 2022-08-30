@@ -30,7 +30,8 @@ class CardController extends RouteController {
         {
           page,
           limit: 20,
-          sort: { createdAt: -1, product_id:null },
+          sort:{title: 1}
+          // sort: { createdAt: -1, product_id:null },
         }
       );
 
