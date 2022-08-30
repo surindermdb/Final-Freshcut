@@ -22,7 +22,7 @@ class OderDetailController extends RouteController {
       let newid=id.split('=')[1];
       console.log('order id',newid);
       var myHeaders = new Headers();
-      myHeaders.append("X-Shopify-Access-Token", "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");
+      myHeaders.append("X-Shopify-Access-Token", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
       // myHeaders.append("Cookie", "_secure_admin_session_id=cd373ae50ebb1384cd48b96231134f89; _secure_admin_session_id_csrf=cd373ae50ebb1384cd48b96231134f89");
 
       var requestOptions = {
